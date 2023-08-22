@@ -36,13 +36,28 @@ export class QuizComponent implements OnInit {
     this.nextQuestion()
   }
 
-  nextQuestion() {
+  async nextQuestion() {
     this.questionIndex++
 
     if(this.questionMaxIndex > this.questionIndex) {
       this.questionSelected = this.questions[this.questionIndex]
     } else {
+      const finalAnswer: string = await this.checkResult(this.answers)
       this.finished = true
+      this.answerSelected = quiz_questions.results[finalAnswer as keyof typeof quiz_questions.results]
     }
+  }
+
+  async checkResult(answers: string[]) {
+    const result = answers.reduce((prev, curr, i, arr) => {
+      if(
+        arr.filter(item => item === prev).length > arr.filter(item => item === curr).length
+      ) {
+        return prev
+      } else {
+        return curr
+      }
+    })
+    return result
   }
 }
