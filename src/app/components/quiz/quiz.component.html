@@ -1,1 +1,23 @@
-<p>quiz works!</p>
+<div class="quiz-container">
+    <div class="quiz-card">
+        <div class="quiz-logo">
+            <img src="../../../assets/img/quiz-super-logo.jpg" alt="">
+            <h3>{{ title }}</h3>
+        </div>
+        <div *ngIf=!finished class="quiz-question">
+            <h3>{{ questionSelected.question }}</h3>
+        </div>
+        <div *ngIf=!finished class="quiz-options">
+            <button
+                *ngFor="let option of questionSelected.options" 
+                (click)="submitAnswer(option.alias)"
+                type="button"
+                class="btn-option">{{ option.name }}
+            </button>
+        </div>
+        <div *ngIf=finished class="quiz-result">
+            <h1>O seu resultado é:</h1>
+            <p>Resposta selecionada</p>
+        </div>
+    </div>
+</div>
